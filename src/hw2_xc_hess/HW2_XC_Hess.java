@@ -9,13 +9,18 @@ public class HW2_XC_Hess {
 	static int Answer = 0;
 	static int Age = 0; 
 	static DecimalFormat DF = new DecimalFormat("####0.00");
+	static int TotalUnderWeight = 0;
+	static int TotalNormalWeight = 0;
+	static int TotalOverWeight = 0;
+	static int TotalObese = 0;
+	static int TotalHighRisk = 0;
 
 	public static void main(String[] args) {
 		
 		//declarations
 		String FirstName = ""; 
 		String LastName = ""; 
-		String TotalPeople = "";
+		int TotalPeople = 0;
 		String DetermineRisk = "";
 		String WeightString = "";
 		int WeightClass = 0;
@@ -39,8 +44,9 @@ public class HW2_XC_Hess {
 		WeightClass = DetermineStatus(BMI);
 		WeightString = WeightStringify(WeightClass);
 		DetermineRisk = CardiovascularRisk(HeartRate, WeightClass);
-		Recipt(FirstName, LastName, Age, Lbs, Inches ,HeartRate, BMI, WeightString, DetermineRisk);
-		TotalPeople = AddPerson(FirstName,TotalPeople);
+		TotalPeople = AddPerson(TotalPeople);
+		CalculateWeightTotal(WeightClass);
+		Recipt(FirstName, LastName, Age, Lbs, Inches ,HeartRate, BMI, WeightString, DetermineRisk, TotalPeople);
 		ContinueProgram();
 		}
 		System.out.println("Thanks for using the program");
@@ -196,6 +202,7 @@ public class HW2_XC_Hess {
 			DetermineRisk = "Low or no risk";
 		} else {
 			DetermineRisk = "Risk is High";
+			TotalHighRisk = TotalHighRisk + 1;
 		}
 		return DetermineRisk;
 					
@@ -204,7 +211,7 @@ public class HW2_XC_Hess {
 	
 //==================CARDIOVASCULAR RISK METHOD===================
 	
-	public static void Recipt(String FirstName, String LastName, int Age,double Lbs,double Inches,double HeartRate, double BMI, String WeightString,String DetermineRisk ) {
+	public static void Recipt(String FirstName, String LastName, int Age,double Lbs,double Inches,double HeartRate, double BMI, String WeightString,String DetermineRisk, int TotalPeople ) {
 		System.out.println("Patient : " + FirstName + " " + LastName);
 		System.out.println("Age : " + Age);
 		System.out.println("Weight : " + DF.format(Lbs));
@@ -213,18 +220,41 @@ public class HW2_XC_Hess {
 		System.out.println("BMI : " + DF.format(BMI));
 		System.out.println("Weight Class : " + WeightString);
 		System.out.println("Disease Risk : " + DetermineRisk);
+		System.out.println("Total number of people processed : " + TotalPeople) ;
+		System.out.println("Total Under Weight " + TotalUnderWeight);
+		System.out.println("Total Healthy Weight " + TotalNormalWeight);
+		System.out.println("Total Over Weight " + TotalOverWeight);
+		System.out.println("Total Obese " + TotalObese);
+		System.out.println("Total High Risk " + TotalHighRisk);
+
 						
 	}
 	//===============END CARDIOVASCULAR RISK METHOD===================
 	
-//==================CARDIOVASCULAR RISK METHOD===================
+//==================ADD PERSON METHOD===================
 	
-	public static String AddPerson(String FirstName, String TotalPeople) {
-		TotalPeople = TotalPeople + FirstName + ", ";
-		System.out.println("Total number of People : " + TotalPeople) ;
+	public static int AddPerson(int TotalPeople) {
+		TotalPeople = TotalPeople + 1;
 		 return TotalPeople;
 	}
-	//===============END CARDIOVASCULAR RISK METHOD===================
+	//===============END ADD PERSON METHOD===================
+	
+//==================CALCULATE TOTAL METHOD===================
+	
+	public static void CalculateWeightTotal(int WeightClass) {
+		
+		if(WeightClass == 0) {
+			TotalUnderWeight = TotalUnderWeight + 1;
+		} else if(WeightClass == 1) {
+			TotalNormalWeight = TotalNormalWeight + 1;
+		} else if(WeightClass == 2) {
+			TotalOverWeight = TotalOverWeight + 1;
+		} else if(WeightClass == 3) {
+			TotalObese = TotalObese + 1;
+		} 
+		
+	}
+	//===============END CALCULATE TOTAL METHOD===================
 
 
 }
